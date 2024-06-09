@@ -36,7 +36,7 @@ Every Camunda installation requires a database schema update.
 ## Procedure
 
 1. Check for [available database patch scripts]({{< ref "/update/patch-level.md#database-patches" >}}) for your database that are within the bounds of your update path.
- Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Nexus](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
+ Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Artifact Repository](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
  We highly recommend executing these patches before updating. Execute them in ascending order by version number.
  The naming pattern is `$DATABASENAME_engine_7.11_patch_?.sql`.
 
@@ -114,7 +114,7 @@ In this release, we introduced the following HTTP response headers in the web ap
 * Content Security Policy (`Content-Security-Policy`)
 * Content-Type Options (`X-Content-Type-Options`)
 
-Please see the documentation about the [HTTP Header Security]({{< ref "/webapps/shared-options/header-security.md" >}}) 
+Please see the documentation about the [HTTP Header Security]({{< ref "/webapps/shared-options/header-security.md" >}})
 to learn more about the several headers, the defaults, and how to configure or even disable them according to your needs.
 
 # Camunda Commons Typed Values Migration
@@ -124,7 +124,7 @@ Starting with version 7.12, the **`camunda-commons-typed-values`** library has b
 The changes include:
 
   * The library version has changed from Camunda Commons (currently at 1.8.0) to Camunda 7 version (7.12.0). You can find the new Maven coordinates below:
-  
+
 ```xml
 <dependency>
   <groupId>org.camunda.commons</groupId>
@@ -134,7 +134,7 @@ The changes include:
 ```
   * The library isn't part of the `camunda-commons-bom` anymore. Now, it is directly part of the `camunda-bom`. Users that are importing the `camunda-commons-bom` now need to either replace the import with the `camunda-bom`, or, explicitly declare the library version as described above.
   * When updating the `camunda-commons-typed-values` library on a Container-Managed Process Engine, the new `camunda-commons-typed-values` artifact name contains the Camunda 7 version.
-  
+
 # Camunda DMN Engine Migration
 
 The **Camunda DMN Engine** is another migration to the `camunda-bpm-platform` repository happening in version 7.12.0. The DMN Engine migration doesn't require any adjustments. However, any contributions to the DMN Engine needs to be addressed to the [camunda-bpm-platform repository](https://github.com/camunda/camunda-bpm-platform/tree/master/engine-dmn).

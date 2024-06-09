@@ -45,7 +45,7 @@ Every Camunda installation requires a database schema update.
 ## Procedure
 
 1. Check for [available database patch scripts]({{< ref "/update/patch-level.md#database-patches" >}}) for your database that are within the bounds of your update path.
- Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Nexus](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
+ Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Artifact Repository](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
  We highly recommend to execute these patches before updating. Execute them in ascending order by version number.
  The naming pattern is `$DATABASENAME_engine_7.8_patch_?.sql`.
 
@@ -104,7 +104,7 @@ If a database other than the default H2 database is used, the following steps mu
 
 If you are using Camunda Spring Boot Starter(s) within you Spring Boot application, then you would need to:
 
-1. Check [Version compatibility]({{< ref "/user-guide/spring-boot-integration/version-compatibility.md" >}}) matrix in the docs. 
+1. Check [Version compatibility]({{< ref "/user-guide/spring-boot-integration/version-compatibility.md" >}}) matrix in the docs.
 2. Update Spring Boot Starter and, when required, Spring Boot versions in your `pom.xml`.
 3. Update Camunda version in your `pom.xml` in case you override it before (e.g. when using enterprise version or patch releases).
 
@@ -133,7 +133,7 @@ PUT /process-instance/{id}/variables/{varName}
     "serializationDataFormat": "application/x-java-serialized-object"
   }
 }
-``` 
+```
 
 or via Java:
 
@@ -153,10 +153,10 @@ In this case you will need to use another serialization format (JSON or XML) or 
 
 # Groovy version
 
-The pre-built Camunda distributions of versions 7.6.10, 7.7.5 and 7.8.0 ship with Groovy library of version 2.4.5, whereas newer versions come with Groovy 2.4.13. 
+The pre-built Camunda distributions of versions 7.6.10, 7.7.5 and 7.8.0 ship with Groovy library of version 2.4.5, whereas newer versions come with Groovy 2.4.13.
 Please update the library `groovy-all-$GROOVY_VERSION.jar` in the `lib` folder of your application server.
 
-# Adjustable Time Period for Historic Activity Instances   
+# Adjustable Time Period for Historic Activity Instances
 
 In the historic process definition diagram it is possible to select time periods for which activity instance badges are displayed.
 
@@ -184,7 +184,7 @@ loginDelayBase = 3;
 
 # Jackson version update
 
-Jackson version in Spin project was updated from version 2.6.3 to 2.9.5, but Spin is still compatible with older version (2.6.3). To switch back on older version you can just replace `jackson-*-2.9.5.jar` 
+Jackson version in Spin project was updated from version 2.6.3 to 2.9.5, but Spin is still compatible with older version (2.6.3). To switch back on older version you can just replace `jackson-*-2.9.5.jar`
 libraries by `jackson-*-2.6.3.jar` in your application server folder (also check environment specific update guides). Or, in case you're using Camunda as a part of your Maven application, configure appropriate dependencies in your `pom.xml`:
 
 ```xml
@@ -216,7 +216,7 @@ libraries by `jackson-*-2.6.3.jar` in your application server folder (also check
       <artifactId>jackson-databind</artifactId>
       <version>2.6.3</version>
     </dependency>
-``` 
+```
 
 In case you were using `camunda-spin-dataformat-all` dependency, you would need to downgrade the whole Spin and use `camunda-spin-dataformat-all-1.4.2.jar`.
 
@@ -235,5 +235,5 @@ As of v. 7.9.0, history cleanup can be parallelized, which leads to creation of 
 
 # Webjar structure changed
 
-Structure of `webjar` and `webjar-ee` artifacts has changed. Now all Web resources are stored under directory `META-INF/resources` to conform the standard way 
+Structure of `webjar` and `webjar-ee` artifacts has changed. Now all Web resources are stored under directory `META-INF/resources` to conform the standard way
 of packaging the Webjars.

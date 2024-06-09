@@ -38,7 +38,7 @@ Every Camunda installation requires a database schema update.
 ## Procedure
 
 1. Check for [available database patch scripts]({{< ref "/update/patch-level.md#database-patches" >}}) for your database that are within the bounds of your update path.
- Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Nexus](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
+ Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Artifact Repository](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
  We highly recommend to execute these patches before updating. Execute them in ascending order by version number.
  The naming pattern is `$DATABASENAME_engine_7.10_patch_?.sql`.
 
@@ -414,15 +414,15 @@ customizations still work as expected with the new versions used in Camunda 7.11
 
 # HTTP Header Security in Webapps
 
-Starting with this release, a HTTP Header Security Servlet Filter is introduced for the Webapps. With Camunda 7.11.0 
+Starting with this release, a HTTP Header Security Servlet Filter is introduced for the Webapps. With Camunda 7.11.0
 we have added the XSS Protection Header to all server responses in conjunction with the Webapps.
 
 ## XSS Protection in Webapps
 
-By default, the XSS Protection HTTP Header is configured in a way that a page gets blocked as soon as the browser detects 
-a cross-site scripting attack. You can either loosen this behavior or even disable the XSS Protection Header. Learn more 
-about how to configure the [HTTP Header Security Filter]({{< ref "/webapps/shared-options/header-security.md" >}}). 
+By default, the XSS Protection HTTP Header is configured in a way that a page gets blocked as soon as the browser detects
+a cross-site scripting attack. You can either loosen this behavior or even disable the XSS Protection Header. Learn more
+about how to configure the [HTTP Header Security Filter]({{< ref "/webapps/shared-options/header-security.md" >}}).
 
-For further reading on how the XSS protection header works in detail, 
+For further reading on how the XSS protection header works in detail,
 please see [Mozillas MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection).
 

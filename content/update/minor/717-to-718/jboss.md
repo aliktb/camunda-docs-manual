@@ -10,7 +10,7 @@ menu:
 
 ---
 
-The following steps describe how to update the Camunda artifacts on a Wildfly/JBoss EAP 7 in a 
+The following steps describe how to update the Camunda artifacts on a Wildfly/JBoss EAP 7 in a
 shared process engine scenario. Throughout the procedure, refer to the [update guide][update-guide].
 
 If not already done, download the [Camunda 7.18 Wildfly distribution](https://downloads.camunda.cloud/release/camunda-bpm/wildfly/7.18/).
@@ -94,7 +94,7 @@ Additionally, replace the following dependent modules:
 
 ## Groovy
 
-Replace the 'org/codehaus/groovy/groovy-all' module from the folder `$APP_SERVER_HOME/modules/` with the following 
+Replace the 'org/codehaus/groovy/groovy-all' module from the folder `$APP_SERVER_HOME/modules/` with the following
 modules from the folder `$APP_SERVER_DISTRIBUTION/modules/`, if present:
 
 * `org/codehaus/groovy/groovy-all`
@@ -111,7 +111,7 @@ modules from the folder `$APP_SERVER_DISTRIBUTION/modules/`, if present:
 The following steps are required to update the Camunda REST API on a JBoss/Wildfly instance:
 
 1. Undeploy an existing web application with a name like `camunda-engine-rest`.
-2. Download the REST API web application archive from our [Maven Nexus Server][engine-rest]. Alternatively, switch to the private repository for
+2. Download the REST API web application archive from our [Artifact Repository][engine-rest]. Alternatively, switch to the private repository for
    the enterprise version (credentials from license required). Choose the correct version named `$PLATFORM_VERSION/camunda-engine-rest-$PLATFORM_VERSION-$CLASSIFIER.war`.
 3. Deploy the web application archive to your JBoss/Wildfly instance.
 
@@ -120,7 +120,7 @@ The following steps are required to update the Camunda REST API on a JBoss/Wildf
 The following steps are required to update the Camunda web applications Cockpit, Tasklist, and Admin on a JBoss/Wildfly instance:
 
 1. Undeploy an existing web application with a name like `camunda-webapp`.
-2. Download the Camunda web application archive from our [Maven Nexus Server][webapp-jboss].
+2. Download the Camunda web application archive from our [Artifact Repository][webapp-jboss].
    Alternatively, switch to the private repository for the enterprise version (credentials from license required).
    Choose the correct version named `$PLATFORM_VERSION/camunda-webapp-jboss.war`.
 3. Deploy the web application archive to your JBoss/Wildfly instance.

@@ -79,12 +79,12 @@ Additionally, also replace the following dependent modules:
 * `com/fasterxml/jackson/core/jackson-databind`
 
 {{< note title="Stick to older Jackson version" class="info" >}}
-Starting from v. 7.9, Camunda 7 is delivered with Spin 1.5.1 version, which in its turn relies on Jackson of v. 2.9.5 (compared to v.2.6.3 used before). 
+Starting from v. 7.9, Camunda 7 is delivered with Spin 1.5.1 version, which in its turn relies on Jackson of v. 2.9.5 (compared to v.2.6.3 used before).
 
 In case you need to stick to older Jackson version (2.6.3):
 
 1. do not replace Jackson modules listed above.
-2. Fix the Jackson version in module `org/camunda/spin/camunda-spin-dataformat-json-jackson/main/module.xml` to be 2.6.3. 
+2. Fix the Jackson version in module `org/camunda/spin/camunda-spin-dataformat-json-jackson/main/module.xml` to be 2.6.3.
 
 Scenarios, where you could consider using the earlier Jackson version are listed [here]({{< ref "/update/minor/78-to-79/_index.md#jackson-version-update" >}}).
 {{< /note >}}
@@ -99,15 +99,15 @@ Replace the following module from the folder `$APP_SERVER_HOME/modules/` with it
 # 3. Update Camunda Web Applications
 
 ## Choose the right REST API Artifact
-From now on there exist separate REST API artifacts (**W**eb **A**pplication **Ar**chives) for **Wildfly** as well as **JBoss AS 7**. 
-Therefore the artifact with the right classifier needs to be chosen: 
+From now on there exist separate REST API artifacts (**W**eb **A**pplication **Ar**chives) for **Wildfly** as well as **JBoss AS 7**.
+Therefore the artifact with the right classifier needs to be chosen:
 
 - Wildfly requires the classifier: **wildfly**
 - JBoss AS 7 requires the classifier: **jbossas7**
 
 Please bear this in mind ...
 
-- on downloading the REST API from our [Maven Nexus Server][engine-rest]
+- on downloading the REST API from our [Artifact Repository][engine-rest]
 - on using the REST API dependency within your custom `pom.xml`
 
 The Maven coordinates need to be changed accordingly:
@@ -129,7 +129,7 @@ The Maven coordinates need to be changed accordingly:
 The following steps are required to update the Camunda REST API on a JBoss/Wildfly instance:
 
 1. Undeploy an existing web application with a name like `camunda-engine-rest`
-2. Download the REST API web application archive from our [Maven Nexus Server][engine-rest]. Alternatively, switch to the private repository for
+2. Download the REST API web application archive from our [Artifact Repository][engine-rest]. Alternatively, switch to the private repository for
    the enterprise version (credentials from license required). Choose the correct version named `$PLATFORM_VERSION/camunda-engine-rest-$PLATFORM_VERSION-$CLASSIFIER.war`.
 3. Deploy the web application archive to your JBoss/Wildfly instance.
 
@@ -138,7 +138,7 @@ The following steps are required to update the Camunda REST API on a JBoss/Wildf
 The following steps are required to update the Camunda web applications Cockpit, Tasklist, and Admin on a JBoss/Wildfly instance:
 
 1. Undeploy an existing web application with a name like `camunda-webapp`
-2. Download the Camunda web application archive from our [Maven Nexus Server][webapp-jboss].
+2. Download the Camunda web application archive from our [Artifact Repository][webapp-jboss].
    Alternatively, switch to the private repository for the enterprise version (credentials from license required).
    Choose the correct version named `$PLATFORM_VERSION/camunda-webapp-jboss.war`.
 3. Deploy the web application archive to your JBoss/Wildfly instance.

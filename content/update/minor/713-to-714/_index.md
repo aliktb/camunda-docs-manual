@@ -50,7 +50,7 @@ Every Camunda installation requires a database schema update.
 ## Procedure
 
 1. Check for [available database patch scripts]({{< ref "/update/patch-level.md#database-patches" >}}) for your database that are within the bounds of your update path.
- Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Nexus](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
+ Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Artifact Repository](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
  We highly recommend executing these patches before updating. Execute them in ascending order by version number.
  The naming pattern is `$DATABASENAME_engine_7.13_patch_?.sql`.
 
@@ -127,8 +127,8 @@ You can read more about the update in the [JQuery release blog](https://blog.jqu
 
 # Changes to Task Query and Historic Task Query behavior
 
-As of version `7.14.0`, when using the `TaskService`, or the `HistoryService` to execute a Task query or 
-a Historic Task Instance query (or use the  appropriate REST API endpoints), the following methods now 
+As of version `7.14.0`, when using the `TaskService`, or the `HistoryService` to execute a Task query or
+a Historic Task Instance query (or use the  appropriate REST API endpoints), the following methods now
 perform a case-insensitive comparison:
 
 * `TaskQuery#taskDescription(String description);`
@@ -138,16 +138,16 @@ perform a case-insensitive comparison:
 * `HistoricTaskInstanceQuery#taskDescription(String taskDescription);`
 * `HistoricTaskInstanceQuery#taskDescriptionLike(String taskDescriptionLike);`
 
-This was done to make the remaining methods consistent with the behavior in: 
+This was done to make the remaining methods consistent with the behavior in:
 
-* `TaskQuery#taskName(String name)` 
+* `TaskQuery#taskName(String name)`
 * `TaskQuery#taskNameLike(String nameLike)`
 * `TaskQuery#taskNameNotLike(String nameNotLike)`
 * `TaskQuery#taskNameNotEqual(String nameNotEqual)`
- 
+
 where the behavior was already present.
 
-Users that expect a case-sensitive result, will need to adjust their logic, or Task names and descriptions, 
+Users that expect a case-sensitive result, will need to adjust their logic, or Task names and descriptions,
 for this change of behavior.
 
 
@@ -184,7 +184,7 @@ In case you already have a [Connect]({{< ref "/reference/connect/_index.md#maven
 
 
 # Changes to the Cockpit Config File
-The structure of the `config.js` file, located in the `app/cockpit/scripts/` directory of the webapps, changed slightly. It is now a Javascript module. If you have customized the config file, replace the line 
+The structure of the `config.js` file, located in the `app/cockpit/scripts/` directory of the webapps, changed slightly. It is now a Javascript module. If you have customized the config file, replace the line
 ```javascript
 window.camCockpitConf = {
   // ...
@@ -215,7 +215,7 @@ export default {
 }
 ```
 If you do not have custom scripts or Cockpit plugins, you are good to go. Otherwise, continue reading to find out how to migrate your plugins.
- 
+
 # New Frontend Plugin System for Cockpit
 With the 7.14.0 release, we updated the Cockpit frontend plugin system. If you have deployed custom scripts or Cockpit plugins, you need to migrate them if you want to use them in future releases. Cockpit plugins from 7.13 will no longer work in 7.14.
 
@@ -228,13 +228,13 @@ To continue using AngularJS plugins, you have to change your plugin to use the n
 
 As your plugin is now displayed in your own AngularJS app and is decoupled from the Cockpit application, Camunda directives and services are no longer available. If you use one of the following in your plugin, you will have to migrate it.
 
-### Directives 
+### Directives
 <!-- If you used directives prefixed with CAM- -->
 Camunda directives, such as search widgets (`cam-widget-search`) or variable tables (`cam-variable-table`) can no longer be used. You can still include and use UI frameworks such as [UI Bootstrap](https://angular-ui.github.io/bootstrap/), if you also bundle them with your plugin. As a rule of thumb, all widgets prefixed with `cam-` will be unavailable.
 
 ### Services
 <!-- If you used Angular services -->
-As with directives, services you could inject into your AngularJS component are no longer available. Only the services included in documented in the [AngularJS documentation](https://docs.angularjs.org/api) are available by default. Services such as `camAPI` and `Uri` can no longer be injected. You can still make requests against the REST API using the [$http service](https://docs.angularjs.org/api/ng/service/$http) and the API Urls that get passed into the render function. 
+As with directives, services you could inject into your AngularJS component are no longer available. Only the services included in documented in the [AngularJS documentation](https://docs.angularjs.org/api) are available by default. Services such as `camAPI` and `Uri` can no longer be injected. You can still make requests against the REST API using the [$http service](https://docs.angularjs.org/api/ng/service/$http) and the API Urls that get passed into the render function.
 
 If you changed the CSRF-cookie name or use other HTTP-clients such as the `fetch` API, you'll also need to set the headers appropriately. The current CSRF token is always passed into the render function in the second argument as `api.CSRFToken`. The `api.engineApi` corresponds to the root of our [REST API](https://docs.camunda.org/manual/develop/reference/rest/). Check out the [documentation]({{< ref "/webapps/cockpit/extend/plugins.md#attributes-in-detail" >}}) for more details on the render function.
 

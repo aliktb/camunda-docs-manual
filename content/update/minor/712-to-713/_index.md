@@ -43,7 +43,7 @@ Every Camunda installation requires a database schema update.
 ## Procedure
 
 1. Check for [available database patch scripts]({{< ref "/update/patch-level.md#database-patches" >}}) for your database that are within the bounds of your update path.
- Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Nexus](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
+ Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Artifact Repository](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
  We highly recommend executing these patches before updating. Execute them in ascending order by version number.
  The naming pattern is `$DATABASENAME_engine_7.12_patch_?.sql`.
 
@@ -105,7 +105,7 @@ Starting with version 7.13, the **`camunda-bpm-spring-boot-starter`** library ha
 The library version has therefore changed from Camunda Spring Boot Starter (currently at 3.4.x) to the Camunda 7 version (7.13.0).
 The Maven coordinates have not changed otherwise.
 
-Overriding the Camunda version used by the Spring Boot Starter is not necessary anymore. 
+Overriding the Camunda version used by the Spring Boot Starter is not necessary anymore.
 Pick the version of the Starter that resembles the version of Camunda 7 you would like to use.
 
 If you are using Camunda Spring Boot Starter within your Spring Boot application, then you need to:
@@ -116,7 +116,7 @@ If you are using Camunda Spring Boot Starter within your Spring Boot application
 
 ## Changed Default Application Paths
 
-With this release, the application path of the Spring Boot Webapp Starter & REST API Starter changed. 
+With this release, the application path of the Spring Boot Webapp Starter & REST API Starter changed.
 The change aligns the application path with all other Camunda 7 distributions.
 
 ### REST API
@@ -136,11 +136,11 @@ spring.jersey.application-path=/rest
 Old Application Path: `/`\
 New Application Path: `/camunda`
 
-In previous versions, there was a problem when using URL paths like `/api/*` or `/app/*` for your 
-custom resources since these paths were reserved for the Camunda 7 Webapp. For instance, the 
-Camunda 7 Webapp specific CSRF Prevention Filter was applied on these paths and might have 
-interfered with your custom REST endpoints or applications. With the changed application path, you 
-can now use these paths without restrictions and remove any workarounds (e. g. URL whitelisting for 
+In previous versions, there was a problem when using URL paths like `/api/*` or `/app/*` for your
+custom resources since these paths were reserved for the Camunda 7 Webapp. For instance, the
+Camunda 7 Webapp specific CSRF Prevention Filter was applied on these paths and might have
+interfered with your custom REST endpoints or applications. With the changed application path, you
+can now use these paths without restrictions and remove any workarounds (e. g. URL whitelisting for
 the CSRF Prevention Filter).
 
 If you want to change the application path back to the old one, use the following configuration
@@ -150,7 +150,7 @@ property in your `application.yaml` file:
 camunda.bpm.webapp.application-path=/
 ```
 
-**Please Note:** When changing the application path back to `/`, the `/api/*` and `/app/*` are 
+**Please Note:** When changing the application path back to `/`, the `/api/*` and `/app/*` are
 reserved for the Camunda 7 Webapp again.
 
 ## New License Key Mechanism
@@ -229,13 +229,13 @@ Please note that the new versions of Freemarker and Velocity contain changes tha
 
 # Entirely Replaced FEEL Engine
 
-With this release, we replaced the old FEEL Engine completely. From now on, Camunda 7 uses the 
+With this release, we replaced the old FEEL Engine completely. From now on, Camunda 7 uses the
 [FEEL Scala Engine](https://github.com/camunda/feel-scala) (opens external link) by default.
 You can restore the legacy behavior via a [configuration property][feel-legacy-prop].
 
 ## New Custom Function Mechanism
 
-The FEEL Engine provides an all-new Custom Function mechanism. It is now possible to register Custom 
+The FEEL Engine provides an all-new Custom Function mechanism. It is now possible to register Custom
 Functions programmatically. Please read all about it in the documentation about [Custom FEEL Functions].
 The old way to register a Custom Function is not supported with the new FEEL Engine.
 
@@ -275,17 +275,17 @@ Expression languages defined in the DMN Model (*.dmn file) will override the def
 
 ## New Logger Category
 
-The new FEEL Engine uses the slf4j logging "facade", as defined in the 
+The new FEEL Engine uses the slf4j logging "facade", as defined in the
 [Camunda docs]({{< ref "/user-guide/logging.md" >}}).
 
-However, since the new FEEL Engine is an [independently maintained project](https://github.com/camunda/feel-scala/), 
-it defines its own logger category. Users that filter the old FEEL Engine logs will need to update 
-their configurations by adding a configuration for the new FEEL Engine logger category 
+However, since the new FEEL Engine is an [independently maintained project](https://github.com/camunda/feel-scala/),
+it defines its own logger category. Users that filter the old FEEL Engine logs will need to update
+their configurations by adding a configuration for the new FEEL Engine logger category
 `org.camunda.feel.FeelEngine`.
 
-For the Camunda-related integration code of the Scala FEEL Engine, the new, 
+For the Camunda-related integration code of the Scala FEEL Engine, the new,
 `org.camunda.bpm.dmn.feel.scala` logger category was added. The logs under this category will
-cover only the "Scala FEEL Engine"-related operations. For a more general configuration, the old 
+cover only the "Scala FEEL Engine"-related operations. For a more general configuration, the old
 `org.camunda.bpm.dmn.feel` can still be used. If a more fine-grained configuration is needed, the
 new logger category can be utilized.
 
@@ -296,14 +296,14 @@ FEEL Engine has a partial coverage of FEEL 1.1.
 
 Additionally, make sure your FEEL expressions respect the following breaking changes.
 
-### Objects Cannot Be Compared 
+### Objects Cannot Be Compared
 
-Previously it was possible to compare objects when the class of the respective objects implements 
+Previously it was possible to compare objects when the class of the respective objects implements
 `java.lang.Comparable`. Objects cannot be compared with the new FEEL Engine.
 
 ### Spin Java API Cannot Be Called
 
-The handling of Spin-based JSON & XML variables has changed fundamentally. For more information, 
+The handling of Spin-based JSON & XML variables has changed fundamentally. For more information,
 please see the documentation about [FEEL Engine Spin Integration]. The Spin Java API cannot be
 called directly in FEEL Expressions with the new FEEL Engine.
 
@@ -325,8 +325,8 @@ The following exception classes were consolidated to `org.camunda.bpm.dmn.feel.i
 ### Single-Quoted String Literals Not Allowed
 
 Previously, double-quoted as well as single-quoted string literals were allowed.
-The new FEEL Engine is more strict on the specification here. Use double quotes 
-for string literals in expressions. 
+The new FEEL Engine is more strict on the specification here. Use double quotes
+for string literals in expressions.
 
 **Example:** Migrate 'foo' to "foo"
 
@@ -334,8 +334,8 @@ for string literals in expressions.
 
 ### Timezone Information Is Respected
 
-From now on, an exception is thrown when a variable of type `java.util.Date` is compared with the 
-FEEL expression: `date and time("2019-09-12T13:00:00@Europe/Berlin")`. 
+From now on, an exception is thrown when a variable of type `java.util.Date` is compared with the
+FEEL expression: `date and time("2019-09-12T13:00:00@Europe/Berlin")`.
 
 **Ignoring the timezone information is considered as a bug in the old FEEL Engine.**
 
@@ -367,7 +367,7 @@ The default behavior of the `set removal time` batch operations changed to be hi
 # Deployment-Aware Batch Operations
 
 With this release, all [batch operations][] that work on process-related elements, e.g. process instances, are deployment-aware.
-From the list of currently available batch operations, only [Set a Removal Time to Historic Batches][set-removal-time-batch] is not deployment-aware. 
+From the list of currently available batch operations, only [Set a Removal Time to Historic Batches][set-removal-time-batch] is not deployment-aware.
 This is because only the *jobs* of a batch might need deployment-related resources, the batch itself does not and is therefore not bound to a deployment.
 
 Since [Monitor Jobs][] do not need any deployment-related resources anymore with this release as well,

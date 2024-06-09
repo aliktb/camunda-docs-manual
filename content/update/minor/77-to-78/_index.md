@@ -43,7 +43,7 @@ Every Camunda installation requires a database schema update.
 ## Procedure
 
 1. Check for [available database patch scripts]({{< ref "/update/patch-level.md#database-patches" >}}) for your database that are within the bounds of your update path.
- Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Nexus](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
+ Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Artifact Repository](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
  We highly recommend to execute these patches before updating. Execute them in ascending order by version number.
  The naming pattern is `$DATABASENAME_engine_7.7_patch_?.sql`.
 
@@ -103,7 +103,7 @@ If a database other than the default H2 database is used, the following steps mu
 
 This section is applicable if you use the Camunda engine REST API.
 
-The default date format used in the REST API requests and responses has changed from `yyyy-MM-dd'T'HH:mm:ss` to `yyyy-MM-dd'T'HH:mm:ss.SSSZ` (now includes second fractions and timezone). 
+The default date format used in the REST API requests and responses has changed from `yyyy-MM-dd'T'HH:mm:ss` to `yyyy-MM-dd'T'HH:mm:ss.SSSZ` (now includes second fractions and timezone).
 The Camunda webapps support the new format by default.
 
 In case some custom REST clients rely on the old date format, choose one of the two following options:
@@ -126,7 +126,7 @@ You should clean up the following lines from the process engine configuration fi
       <bean class="org.camunda.bpm.engine.impl.bpmn.parser.FoxFailedJobParseListener" />
     </list>
   </property>
-  
+
   <property name="failedJobCommandFactory" ref="foxFailedJobCommandFactory" />
   ...
 </bean>
@@ -138,10 +138,10 @@ You should clean up the following lines from the process engine configuration fi
 
 This section concerns the Java API and the interface `org.camunda.bpm.engine.impl.incident.IncidentHandler`, that is a part of the internal API.
 
-The return type of `IncidentHandler#handleIncident` has been changed from `void` to `Incident`. The API expects that, in case an incident was created, it is returned by the method, 
+The return type of `IncidentHandler#handleIncident` has been changed from `void` to `Incident`. The API expects that, in case an incident was created, it is returned by the method,
 otherwise the method can return a `null` value.
 
-In case there are custom incident handlers implementing that interface, the method `handleIncident(...)` should be adjusted. 
+In case there are custom incident handlers implementing that interface, the method `handleIncident(...)` should be adjusted.
 
 # Batch processing for database operations
 
@@ -161,6 +161,6 @@ So if you're using `jdbcStatementTimeout` configuration on the listed databases,
 # Tasklist Translation File
 
 New labels were introduced and some keys of previously existing labels were changed in the translation file of Tasklist.
-Due to this reason it is necessary to adjust custom translation files accordingly. 
+Due to this reason it is necessary to adjust custom translation files accordingly.
 
 Please have a look at what changed exactly in the [english translation file](https://github.com/camunda/camunda-tasklist-translations/commit/d6dff0c508c5cb4981bbced3ce42e83274d7f4dc#diff-772a593ff61f0e484d43cc349a5ab31c).

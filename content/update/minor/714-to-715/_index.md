@@ -40,7 +40,7 @@ Every Camunda installation requires a database schema update.
 ## Procedure
 
 1. Check for [available database patch scripts]({{< ref "/update/patch-level.md#database-patches" >}}) for your database that are within the bounds of your update path.
- Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Nexus](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
+ Locate the scripts at `$DISTRIBUTION_PATH/sql/upgrade` in the pre-packaged distribution (where `$DISTRIBUTION_PATH` is the path of an unpacked distribution) or in the [Camunda Artifact Repository](https://artifacts.camunda.com/artifactory/camunda-bpm/org/camunda/bpm/distro/camunda-sql-scripts/).
  We highly recommend executing these patches before updating. Execute them in ascending order by version number.
  The naming pattern is `$DATABASENAME_engine_7.14_patch_?.sql`.
 
@@ -98,9 +98,9 @@ If a database other than the default H2 database is used, the following steps mu
 
 # Exception Handling in Task API
 
-With this release, the implementation of [`TaskService#handleBpmnError`][javadocs-taskservice-handleBpmnError] now throws a 
-`NotFoundException` instead of a `NullValueException` in case no task with the given id exists. If the provided task id or 
-error code are null or empty, a `BadUserRequestException` is thrown. 
+With this release, the implementation of [`TaskService#handleBpmnError`][javadocs-taskservice-handleBpmnError] now throws a
+`NotFoundException` instead of a `NullValueException` in case no task with the given id exists. If the provided task id or
+error code are null or empty, a `BadUserRequestException` is thrown.
 
 Additionally, the implementation of [`TaskService#handleEscalation`][javadocs-taskservice-handleEscalation] was changed, too.
 It now also throws a `NotFoundException` instead of a `NullValueException` in case no task with the given id exists. If the provided task id or
@@ -125,17 +125,17 @@ New Version: 8.0.23
 
 ## Behavior Changes
 
-The driver's new version has two significant behavioral changes you should take care of when migrating 
+The driver's new version has two significant behavioral changes you should take care of when migrating
 your Docker-based Camunda Runtime installation.
 
 ### Downgrade to 5.1.21
 
 You don't want to migrate to the new version? You can replace the new MySQL JDBC Driver with the old one
-to restore the previous behavior. To do so, you can create a new `Dockerfile` based on one of our official 
+to restore the previous behavior. To do so, you can create a new `Dockerfile` based on one of our official
 docker images and add your custom commands to replace the MySQL JDBC Driver.
 
-For the Wildfly image, additionally make sure to adjust the data source class in the `standalone.xml` 
-file located under `/camunda/standalone/configuration/` from `com.mysql.cj.jdbc.MysqlXADataSource` back to 
+For the Wildfly image, additionally make sure to adjust the data source class in the `standalone.xml`
+file located under `/camunda/standalone/configuration/` from `com.mysql.cj.jdbc.MysqlXADataSource` back to
 `com.mysql.jdbc.jdbc2.optional.MysqlXADataSource`:
 
 ```xml
@@ -148,26 +148,26 @@ file located under `/camunda/standalone/configuration/` from `com.mysql.cj.jdbc.
 
 ### 1) Milliseconds Precision for Date/Time values
 
-The new version of the Driver changes how a date/time value is handled. Please make sure to configure 
+The new version of the Driver changes how a date/time value is handled. Please make sure to configure
 the Driver as described in [MySQL Database Configuration]({{< ref "/user-guide/process-engine/database/mysql-configuration.md" >}})
 to avoid breaking behavior.
 
 ### 2) Changed Time Zone Handling
 
-In case the process engine and the MySQL Server operate in different time zones, and you use the 
-MySQL JDBC Driver's default configuration, migrating to the new release leads to a wrong conversion of 
+In case the process engine and the MySQL Server operate in different time zones, and you use the
+MySQL JDBC Driver's default configuration, migrating to the new release leads to a wrong conversion of
 date values (e.g., the due date of a task can change).
 
-You can configure the driver to convert date values from and to the MySQL Server into the time zone 
-in which the process engine/JVM operates. This ensures that values that were stored before the migration 
-are returned correctly after the migration and date values are stored correctly after the migration. 
+You can configure the driver to convert date values from and to the MySQL Server into the time zone
+in which the process engine/JVM operates. This ensures that values that were stored before the migration
+are returned correctly after the migration and date values are stored correctly after the migration.
 You can achieve this by specifying the correct time zone via the property [`serverTimeZone`](https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-connp-props-datetime-types-processing.html#cj-conn-prop_serverTimezone) in your JDBC connection URL.\
 For instance, if your process engine operates in CET but your MySQL Server does not, set the property to `serverTimeZone=CET`.
 
 {{< note title="Heads-up!" class="info" >}}
-Changing the time zone of the MySQL Server to the one the process engine operates in can have unwanted side-effects 
-to date values that are stored in columns of type `TIMESTAMP`: MySQL converts `TIMESTAMP` values from the server time zone 
-to UTC for storage, and back from UTC to the current time zone for retrieval. Read more about it in the 
+Changing the time zone of the MySQL Server to the one the process engine operates in can have unwanted side-effects
+to date values that are stored in columns of type `TIMESTAMP`: MySQL converts `TIMESTAMP` values from the server time zone
+to UTC for storage, and back from UTC to the current time zone for retrieval. Read more about it in the
 [MySQL Docs](https://dev.mysql.com/doc/refman/5.6/en/datetime.html).
 {{< /note >}}
 
@@ -187,7 +187,7 @@ There are two major changes with regards to metrics:
 
 Previously, the number of unique task workers has been aggregated from historic task instance data.
 Starting with this release, the data necessary to track this metric will be kept in a separate table `ACT_RU_TASK_METER_LOG`.
-This will make the metric independent from engine history data, allowing you to handle history and its cleanup as implied by your use case, 
+This will make the metric independent from engine history data, allowing you to handle history and its cleanup as implied by your use case,
 regardless of the metrics you might be required to report as an enterprise customer.
 
 You can read more about the metrics in our [Metrics Guide]({{< ref "/user-guide/process-engine/metrics.md" >}}).
@@ -226,7 +226,7 @@ You can disable this preview feature in the [Cockpit configuration]({{< ref "/we
 
 ## Changes to the Webapp Config Files
 
-The structure of the `config.js` file, located in the `app/{admin|tasklist|welcome}/scripts/` directory of the webapps, changed slightly. It is now a Javascript module. If you have customized the config file, replace the line 
+The structure of the `config.js` file, located in the `app/{admin|tasklist|welcome}/scripts/` directory of the webapps, changed slightly. It is now a Javascript module. If you have customized the config file, replace the line
 ```javascript
 window.camAdminConf = {
   // ...
@@ -257,7 +257,7 @@ export default {
 }
 ```
 If you do not have custom scripts or plugins, you are good to go. Otherwise, continue reading to find out how to migrate your plugins.
- 
+
 ## New Frontend Plugin System for all Webapps
 
 With the 7.15.0 release, we updated all our Webapps frontend plugin system. They now use the same plugin system that we introduced to cockpit in the 7.14 release. Check out the [7.13 to 7.14 update guide]({{< ref "/update/minor/713-to-714/_index.md#migrate-existing-angularjs-plugins" >}}) for more details on how to migrate your plugins.
@@ -274,27 +274,27 @@ If you are upgrading and have a modified `config.js` file, you can simply rename
 
 Plugins created for Camunda 7.13 or earlier can be included for compatibility. To achieve this, simply prefix your Plugin ID with `legacy-`. The AngularJS module name for the entry module will be `{appName}.plugin.legacy-*`. There are 3 Steps you can follow to adjust your existing plugin to work with Camunda 7.15. We will show the changes with the [Cockpit Failed Jobs Plugin](https://github.com/camunda/camunda-bpm-examples/tree/7.13/cockpit/cockpit-failed-jobs-plugin), but the steps are the same for all webapp plugins.
 
-  1. Prefix the Plugin ID with `legacy-`.  
+  1. Prefix the Plugin ID with `legacy-`.
 
         --- a/src/main/java/org/camunda/bpm/cockpit/plugin/failedjobs/FailedJobsPlugin.java
         +++ b/src/main/java/org/camunda/bpm/cockpit/plugin/failedjobs/FailedJobsPlugin.java
         @@ -24,7 +24,7 @@ import org.camunda.bpm.cockpit.plugin.spi.impl.AbstractCockpitPlugin;
-        
+
         public class FailedJobsPlugin extends AbstractCockpitPlugin {
-        
+
         -  public static final String ID = "failed-jobs-plugin";
         +  public static final String ID = "legacy-failed-jobs-plugin";
-        
+
         public String getId() {
             return ID;
 
 2. Rename the webapp resources folder.
 
-            src/main/resources/plugin-webapp/failed-jobs-plugin 
+            src/main/resources/plugin-webapp/failed-jobs-plugin
         --> src/main/resources/plugin-webapp/legacy-failed-jobs-plugin
 
 3. Adjust the Plugin ID and paths in the frontend files. This includes custom API calls, resources and the module name.
-    
+
         --- a/src/main/resources/plugin-webapp/failed-jobs-plugin/app/plugin.js
         +++ b/src/main/resources/plugin-webapp/legacy-failed-jobs-plugin/app/plugin.js
         @@ -67,14 +67,14 @@ define(['angular'], function(angular) {
@@ -308,7 +308,7 @@ Plugins created for Camunda 7.13 or earlier can be included for compatibility. T
             priority : 15
             });
         }];
-        
+
         -  var ngModule = angular.module('cockpit.plugin.failed-jobs-plugin', []);
         +  var ngModule = angular.module('cockpit.plugin.legacy-failed-jobs-plugin', []);
                 ngModule.config(Configuration);
@@ -318,12 +318,12 @@ Please note that all Plugins with this prefix will be included using the 7.13 pl
 # PostgreSQL Support Clarification
 
 According to the [PostgreSQL versioning documentation][postgresql-versioning], the PostgreSQL versioning
-scheme changed from PostgreSQL 10. For versions before PostgreSQL 10, a major version was marked by the first two 
+scheme changed from PostgreSQL 10. For versions before PostgreSQL 10, a major version was marked by the first two
 version numbers, e.g. `9.4`, `9.6`. From PostgreSQL 10, a major version is marked by a single version number, e.g. `10`,
-`11`, `12`. 
+`11`, `12`.
 
-As this was only a change to the versioning scheme, the content of the minor releases (e.g. `9.4.6`, 
-`9.6.18`, `10.13`, `11.2`, etc.) didn't change. Therefore, we have updated the [Camunda Supported Environments][supported-environments], 
+As this was only a change to the versioning scheme, the content of the minor releases (e.g. `9.4.6`,
+`9.6.18`, `10.13`, `11.2`, etc.) didn't change. Therefore, we have updated the [Camunda Supported Environments][supported-environments],
 to reflect that Camunda supports all the minor version updates of a major PostgreSQL version.
 
 Note that this adjustment doesn't change the supported versions of Amazon Aurora PostgreSQL. This is a database
@@ -333,11 +333,11 @@ service built on top of PostgreSQL, and as such, needs to be tested for support 
 [supported-environments]: {{< ref "/introduction/supported-environments.md#supported-database-products" >}}
 
 # Changes to Camunda 7 Run Start Script
-With 7.15, we have introduced Swagger UI as an additional module of the Camunda 7 Run distro. This brings changes to the 
+With 7.15, we have introduced Swagger UI as an additional module of the Camunda 7 Run distro. This brings changes to the
 default startup behavior of Run and the default serving of static resources through Spring WebMVC.
 
-## New default Behavior of Start Script 
-If no arguments are provided to the Run start script, Swagger UI is now started alongside the WebApps and REST API. To get the old behavior, 
+## New default Behavior of Start Script
+If no arguments are provided to the Run start script, Swagger UI is now started alongside the WebApps and REST API. To get the old behavior,
 launch Run like this:
 ```bash
 ./start.sh --rest --webapps
@@ -351,12 +351,12 @@ You can read more on the configuration of Camunda 7 Run [here][run-documentation
 
 ## Static file serving through Spring Web MVC disabled by default
 By default, Spring Boot serves static content through Spring Web MVC from any directories called `/static`, `/public`, `/resources` or
-`/META-INF/resources` on the classpath. To prevent users from accidentally serving files, we disable this in configuration files `default.yml` and `production.yml` 
+`/META-INF/resources` on the classpath. To prevent users from accidentally serving files, we disable this in configuration files `default.yml` and `production.yml`
 respectively, by setting `spring.web.resources.static-locations` to `NULL`. If you want serve static files, you can add paths there.
 
 [run-documentation]: {{< ref "/user-guide/camunda-bpm-run.md" >}}
 
 # Java External Task Client: New Version Handling
 
-Starting with version 7.15.0, Camunda 7 Runtime and its compatible Java External Task Client 
+Starting with version 7.15.0, Camunda 7 Runtime and its compatible Java External Task Client
 artifact will share the same version.
